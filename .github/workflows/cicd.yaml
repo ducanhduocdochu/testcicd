@@ -28,8 +28,8 @@ jobs:
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys:
-            - ${{ runner.os }}-buildx
+          restore-keys: |
+            ${{ runner.os }}-buildx
       # Step 5: Build and push Docker image to Docker Hub
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v4

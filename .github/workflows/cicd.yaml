@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/testCICD:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/testcicd:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
   # Job 2: Deploy to Ubuntu server
@@ -52,11 +52,11 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/testCICD:latest
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/testcicd:latest
             # Stop and remove the old container, if it exists
-            docker stop testCICD || true
-            docker rm testCICD || true
+            docker stop testcicd || true
+            docker rm testcicd || true
             # Run the new container with environment variables
-            docker run -d -p 80:3000 --name testCICD \
+            docker run -d -p 80:3000 --name testcicd \
               -e PORT=${{ secrets.PORT }} \
-              ${{ secrets.DOCKER_HUB_USERNAME }}/testCICD:latest
+              ${{ secrets.DOCKER_HUB_USERNAME }}/testcicd:latest
